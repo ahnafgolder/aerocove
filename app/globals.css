@@ -348,7 +348,8 @@ select.input { appearance: auto; }
 .hamburger.active span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
 .hamburger.active span:nth-child(2) { opacity: 0; }
 .hamburger.active span:nth-child(3) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
-@media (max-width: 767px) { .hamburger { display: flex; } .desktop-nav { display: none !important; } }
+.mobile-nav-actions { display: none; }
+@media (max-width: 767px) { .mobile-nav-actions { display: flex; align-items: center; gap: 1rem; } .hamburger { display: flex; } .desktop-nav { display: none !important; } }
 @media (min-width: 768px) { .mobile-menu-overlay, .mobile-menu-drawer { display: none !important; } }
 
 /* ========== STICKY MOBILE CART BAR ========== */

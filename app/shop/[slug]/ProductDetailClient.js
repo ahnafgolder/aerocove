@@ -135,18 +135,37 @@ export default function ProductDetailClient({ product }) {
                   <QuantitySelector quantity={quantity} onChange={setQuantity} max={selectedVariant.stock} />
                 </div>
               )}
-              <AddToCartButton
-                product={{
-                  id: product.id,
-                  name: product.name,
-                  price: product.price,
-                  image: mainImage,
-                }}
-                quantity={quantity}
-                phoneModel={selectedVariant ? { id: selectedVariant.phoneModelId, name: selectedVariant.phoneModel.name } : null}
-                requiresModel={product.variants.length > 0}
-                stock={currentStock}
-              />
+              <div className="flex gap-3">
+                <div className="flex-1">
+                  <AddToCartButton
+                    product={{
+                      id: product.id,
+                      name: product.name,
+                      price: product.price,
+                      image: mainImage,
+                    }}
+                    quantity={quantity}
+                    phoneModel={selectedVariant ? { id: selectedVariant.phoneModelId, name: selectedVariant.phoneModel.name } : null}
+                    requiresModel={product.variants.length > 0}
+                    stock={currentStock}
+                  />
+                </div>
+                <div className="flex-1">
+                  <AddToCartButton
+                    product={{
+                      id: product.id,
+                      name: product.name,
+                      price: product.price,
+                      image: mainImage,
+                    }}
+                    quantity={quantity}
+                    phoneModel={selectedVariant ? { id: selectedVariant.phoneModelId, name: selectedVariant.phoneModel.name } : null}
+                    requiresModel={product.variants.length > 0}
+                    stock={currentStock}
+                    isBuyNow={true}
+                  />
+                </div>
+              </div>
             </div>
 
             {/* Trust Badges */}
@@ -176,18 +195,37 @@ export default function ProductDetailClient({ product }) {
             {selectedVariant ? selectedVariant.phoneModel.name : 'Select model'}
           </div>
         </div>
-        <AddToCartButton
-          product={{
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            image: mainImage,
-          }}
-          quantity={quantity}
-          phoneModel={selectedVariant ? { id: selectedVariant.phoneModelId, name: selectedVariant.phoneModel.name } : null}
-          requiresModel={product.variants.length > 0}
-          stock={currentStock}
-        />
+        <div className="flex gap-2 flex-1 justify-end">
+          <div style={{ width: '48%' }}>
+            <AddToCartButton
+              product={{
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                image: mainImage,
+              }}
+              quantity={quantity}
+              phoneModel={selectedVariant ? { id: selectedVariant.phoneModelId, name: selectedVariant.phoneModel.name } : null}
+              requiresModel={product.variants.length > 0}
+              stock={currentStock}
+            />
+          </div>
+          <div style={{ width: '48%' }}>
+            <AddToCartButton
+              product={{
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                image: mainImage,
+              }}
+              quantity={quantity}
+              phoneModel={selectedVariant ? { id: selectedVariant.phoneModelId, name: selectedVariant.phoneModel.name } : null}
+              requiresModel={product.variants.length > 0}
+              stock={currentStock}
+              isBuyNow={true}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

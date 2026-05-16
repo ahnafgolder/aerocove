@@ -1,16 +1,23 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useCart } from './CartProvider';
 
-export default function AddToCartButton({ product, quantity = 1, phoneModel = null, requiresModel = false, stock = 0 }) {
+export default function AddToCartButton({ product, quantity = 1, phoneModel = null, requiresModel = false, stock = 0, isBuyNow = false }) {
   const { addToCart } = useCart();
+  const router = useRouter();
   const [added, setAdded] = useState(false);
 
   const handleAdd = () => {
     if (requiresModel && !phoneModel) return;
     addToCart(product, quantity, phoneModel);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2200);
+    
+    if (isBuyNow) {
+      router.push('/checkout');
+    } else {
+      setAdded(true);
+      setTimeout(() => setAdded(false), 2200);
+    }
   };
 
   const isDisabled = stock <= 0 || (requiresModel && !phoneModel);
@@ -18,7 +25,9 @@ export default function AddToCartButton({ product, quantity = 1, phoneModel = nu
     ? 'Out of Stock'
     : (requiresModel && !phoneModel)
       ? 'Select Model'
-      : null;
+      : isBuyNow 
+        ? 'Buy Now'
+        : null;
 
   return (
     <button
@@ -26,16 +35,17 @@ export default function AddToCartButton({ product, quantity = 1, phoneModel = nu
       className="btn flex-grow py-4 text-lg"
       disabled={isDisabled}
       style={{
-        background: isDisabled ? 'var(--surface-alt)' : added ? 'var(--success)' : 'var(--primary)',
+        background: isDisabled ? 'var(--surface-alt)' : isBuyNow ? 'var(--text)' : added ? 'var(--success)' : 'var(--primary)',
         color: isDisabled ? 'var(--text-muted)' : '#fff',
         fontSize: '1rem',
         fontWeight: 700,
         borderRadius: 'var(--radius)',
         transition: 'all 0.3s cubic-bezier(0.22,1,0.36,1)',
-        transform: added ? 'scale(0.97)' : 'scale(1)',
-        boxShadow: added ? '0 4px 20px rgba(5,150,105,0.3)' : isDisabled ? 'none' : '0 4px 20px rgba(79,70,229,0.25)',
+        transform: added && !isBuyNow ? 'scale(0.97)' : 'scale(1)',
+        boxShadow: (added && !isBuyNow) ? '0 4px 20px rgba(5,150,105,0.3)' : isDisabled ? 'none' : isBuyNow ? '0 4px 20px rgba(0,0,0,0.15)' : '0 4px 20px rgba(79,70,229,0.25)',
         position: 'relative',
         overflow: 'hidden',
+        width: '100%'
       }}
     >
       {label ? label : (
