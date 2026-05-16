@@ -4,6 +4,17 @@ import ProductDetailClient from './ProductDetailClient';
 
 export const revalidate = 60;
 
+export async function generateStaticParams() {
+  const products = await prisma.product.findMany({
+    where: { active: true },
+    select: { slug: true }
+  });
+  
+  return products.map((product) => ({
+    slug: product.slug,
+  }));
+}
+
 export default async function ProductDetail({ params }) {
   const { slug } = await params;
 
