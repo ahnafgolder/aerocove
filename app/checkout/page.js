@@ -14,10 +14,11 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [summaryOpen, setSummaryOpen] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
 
   useEffect(() => {
-    if (isLoaded && cartItems.length === 0) router.push('/cart');
-  }, [isLoaded, cartItems, router]);
+    if (isLoaded && cartItems.length === 0 && !orderPlaced) router.push('/cart');
+  }, [isLoaded, cartItems, router, orderPlaced]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,6 +50,7 @@ export default function CheckoutPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to place order');
+      setOrderPlaced(true);
       clearCart();
       router.push(`/order-confirmation/${data.id}`);
     } catch (err) {
@@ -58,7 +60,7 @@ export default function CheckoutPage() {
     }
   };
 
-  if (!isLoaded || cartItems.length === 0) return <div className="py-20 text-center text-secondary">Loading...</div>;
+  if (!isLoaded || (cartItems.length === 0 && !orderPlaced)) return <div className="py-20 text-center text-secondary">Loading...</div>;
 
   return (
     <div className="container" style={{ padding: '2rem 1.25rem 4rem' }}>
