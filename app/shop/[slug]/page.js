@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import prisma from '@/lib/prisma';
 import ProductDetailClient from './ProductDetailClient';
 
+export const revalidate = 60;
+
 export default async function ProductDetail({ params }) {
   const { slug } = await params;
 

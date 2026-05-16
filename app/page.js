@@ -3,6 +3,8 @@ import prisma from '@/lib/prisma';
 import { formatPrice } from '@/lib/utils';
 import HomeClient from './HomeClient';
 
+export const revalidate = 60;
+
 export default async function Home() {
   const featuredProducts = await prisma.product.findMany({
     where: { active: true, featured: true },

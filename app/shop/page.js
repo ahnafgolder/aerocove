@@ -1,6 +1,8 @@
 import prisma from '@/lib/prisma';
 import ShopClient from './ShopClient';
 
+export const revalidate = 60;
+
 export default async function Shop({ searchParams }) {
   const { category: categorySlug } = await searchParams;
 
